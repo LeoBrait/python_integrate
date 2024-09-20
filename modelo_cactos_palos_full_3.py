@@ -7,17 +7,17 @@ taxa_associacao = 0.5 #c
 r_cacto_adulto = 0.009 #r1
 taxa_facilitacao = 3 #f
 taxa_envelhecimento = 0.05 #alpha (escala de 10^-2)
-k_cacto_adulto = 0.003 #k1 )(inversamente proporcional)
+k_cacto_adulto = 0.009 #k1 )(inversamente proporcional)
 morte_cacto_adulto = 0.01  #d
 r_arbusto = 3 #r2
 k_arbusto = 10 #k2
-taxa_saciedade = 0.0 #h
-taxa_predacao = 0.2 #m
+taxa_saciedade = 1 #h
+taxa_predacao = 0.6 #m k
 
 # condições iniciais
-x_inicial_1 = 10
-x_inicial_2 = 1
-x_inicial_3 = 1
+x_inicial_1 = 0.1
+x_inicial_2 = 0
+x_inicial_3 = 10
 
 # analise de pontos fixos
 
