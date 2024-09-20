@@ -1,3 +1,5 @@
+# Este é um modelo de facilitação sem conversão e sem predadores.
+
 from numpy import *
 from matplotlib.pyplot import *
 from scipy.integrate import odeint

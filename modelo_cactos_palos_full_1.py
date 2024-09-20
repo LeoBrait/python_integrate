@@ -16,7 +16,7 @@ taxa_predacao = 0.1
 taxa_facilitacao = 1
 
 # passos de tempo
-t = arange(0, 500, 0.01)
+t = arange(0, 1000, 0.01)
 
 def modele_facilitacao_amensalismo(
   x, t, r1, k1, r2, k2, taxa_transicao,
