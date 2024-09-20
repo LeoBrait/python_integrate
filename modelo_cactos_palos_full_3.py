@@ -3,7 +3,7 @@ from matplotlib.pyplot import *
 from scipy.integrate import odeint
 
 # parâmetros
-taxa_associacao = 0.5 #c
+taxa_associacao = 2 #c
 r_cacto_adulto = 0.009 #r1
 taxa_facilitacao = 3 #f
 taxa_envelhecimento = 0.05 #alpha (escala de 10^-2)
@@ -12,7 +12,7 @@ morte_cacto_adulto = 0.01  #d
 r_arbusto = 3 #r2
 k_arbusto = 10 #k2
 taxa_saciedade = 1 #h
-taxa_predacao = 0.6 #m k
+taxa_predacao = 3 #m k
 
 # condições iniciais
 x_inicial_1 = 0.1
@@ -22,7 +22,7 @@ x_inicial_3 = 10
 # analise de pontos fixos
 
 # passos de tempo
-t = arange(0, 1000, 0.01)
+t = arange(0, 1000, 0.001)
 
 def modele_facilitacao_amensalismo(
     x, t,

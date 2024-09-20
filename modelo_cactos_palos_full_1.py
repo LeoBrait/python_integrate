@@ -3,20 +3,20 @@ from matplotlib.pyplot import *
 from scipy.integrate import odeint
 
 # parâmetros
-r1 = 0.2
-r2 = 0.5
-k1 = 10
-k2 = 20
-x_inicial_1 = 10
-x_inicial_2 = 10
+r1 = 0.009
+r2 = 3
+k1 = 0.009
+k2 = 10
+x_inicial_1 = 0.1
+x_inicial_2 = 0
 x_inicial_3 = 10
-taxa_transicao = 0.5
-cacto_death = 0.1
-taxa_predacao = 0.1
-taxa_facilitacao = 1
+taxa_transicao = 0.05
+cacto_death = 0.01
+taxa_predacao = 0
+taxa_facilitacao = 3
 
 # passos de tempo
-t = arange(0, 1000, 0.01)
+t = arange(0, 100, 0.01)
 
 def modele_facilitacao_amensalismo(
   x, t, r1, k1, r2, k2, taxa_transicao,
@@ -33,8 +33,6 @@ def modele_facilitacao_amensalismo(
   # Arbustos = 
   r2 * x[2] * (1 - (x[1] - taxa_predacao * x[1] / k2))
   ])
-
-#r2 * x[1] * ( 1 - x[1] / k2)
 
 
 modelo_integrado = odeint(modele_facilitacao_amensalismo, [x_inicial_1, x_inicial_2, x_inicial_3], t, (r1, k1, r2, k2, taxa_transicao, cacto_death, taxa_predacao, taxa_facilitacao))
