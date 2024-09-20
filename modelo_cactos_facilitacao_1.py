@@ -27,7 +27,7 @@ def logistico_palos(x, t, r2, k2):
 logistico_palos_integrado = odeint(logistico_palos, x_inicial_2, t, (r2, k2))
 
 ##################### Modelo Logístico de Cactos facilitados por Palos #########
-def logistico_cactos_facilitados(x, t, r1, k1, r2, k2, a = 3):
+def logistico_cactos_facilitados(x, t, r1, k1, r2, k2, a = 100):
   return array([
     r1 * (x[0] + x[0] * a * x[1]) * ( 1 - x[0] / k1),
     r2 * x[1] * ( 1 - x[1] / k2)
@@ -46,5 +46,5 @@ plot(t, logistico_palos_integrado,linewidth=2.5)
 plot(t, logistico_cactos_facilitados_integrado[:,0],linewidth=2.5)
 xlabel('t',fontsize=20) # definir rótulo do eixo x
 ylabel('x',fontsize = 20) # e do eixo y
-legend(['Cactos', 'Palos', 'Cactos facilitados por Palos'],fontsize=16)
-savefig("logistico.png")
+legend(['Cactos Órfãos', 'Palos', 'Cactos Cuidados'],fontsize=16)
+savefig("facilitacao_1.png")
