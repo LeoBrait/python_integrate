@@ -16,32 +16,45 @@ from mpl_toolkits.mplot3d import Axes3D
 # r_arbusto = (r2)
 # k_arbusto = (k2)
 # taxa_saciedade = (h)
-# taxa_predacao = (m) k 1 =< m =< 2.6
+# taxa_predacao = (m) k 1 =< m =< 2.
 
+# parametros fixos
+taxa_associacao = 0.8
+r_cacto_adulto = 0.009
+taxa_envelhecimento = 1/35
+k_cacto_adulto = 2/100
+morte_cacto_adulto = 0.3
+r_arbusto = 1
+k_arbusto = 50
+taxa_saciedade = 0.8
+taxa_predacao = 1.5
 
-parametros_controle_1 = (
-  1, 0.006,  5, 0.1, 0.009, 0.05, 3, 10, 1, 3
+parametros_facilitacao_0 = (
+  taxa_associacao, # taxa_associacao
+  r_cacto_adulto, # r_cacto_adulto
+  0, # taxa de facilitacao
+  taxa_envelhecimento, # taxa de envelhecimento dos cactos (35 anos para envelhecer)
+  k_cacto_adulto, # k do cacto adulto (50 cactos)
+  morte_cacto_adulto, # 0.3 cactos morrem naturalmente por ano
+  r_arbusto, # r do arbusto
+  k_arbusto, # 50 cactos
+  taxa_saciedade, # taxa de saciedade (os cactos matam 0.8 arbustos por ano)
+  taxa_predacao # taxa de predacao (adimensional
 )
 
-parametros_controle_2 = (
-  1, 0.006, 1, 0.02, 0.009, 0.02, 3, 10, 1, 10
+parametetros_facilitacao_1 = (
+  taxa_associacao, # taxa_associacao
+  r_cacto_adulto, # r_cacto_adulto
+  1, # taxa de facilitacao
+  taxa_envelhecimento, # taxa de envelhecimento dos cactos (35 anos para envelhecer)
+  k_cacto_adulto, # k do cacto adulto (50 cactos)
+  morte_cacto_adulto, # 0.3 cactos morrem naturalmente por ano
+  r_arbusto, # r do arbusto
+  k_arbusto, # 50 cactos
+  taxa_saciedade, # taxa de saciedade (os cactos matam 0.8 arbustos por ano)
+  taxa_predacao # taxa de predacao (adimensional
 )
-
-parametros_oscilatorio_ultra = (
-  3, 0.006, 5, 0.02, 0.009, 0.02, 3, 10, 1, 2
-)
-
-parametros_cactos_jovens_estabilizam_acima = (
-  2, 0.006, 5, 0.02, 0.009, 0.02, 3, 10, 1, 2
-)
-
-parametros_oscilatorio = (
-  2, 0.006, 5, 0.02, 0.009, 0.02, 3, 10, 1, 3
-)
-
-parametros_estavel = (
-  0.5, 0.009, 3, 0.05, 0.009, 0.01, 3, 10, 1, 0.6
-)
+  
 
 # condições iniciais
 x_inicial_1 = 0.1
@@ -50,7 +63,7 @@ x_inicial_3 = 10
 
 
 # passos de tempo
-t = arange(0, 5000, 0.001)
+t = arange(0, 5000, 0.01)
 
 ################################# Modelo #######################################
 def modele_facilitacao_amensalismo(
@@ -75,80 +88,59 @@ def modele_facilitacao_amensalismo(
   ])
 
 ################################# Modelos ######################################
-modelo_estabilizado = odeint(
-    modele_facilitacao_amensalismo, 
-    [x_inicial_1, x_inicial_2, x_inicial_3], 
-    t, 
-    parametros_estavel
-    )
-
-modelo_oscilatorio = odeint(
-    modele_facilitacao_amensalismo, 
-    [x_inicial_1, x_inicial_2, x_inicial_3], 
-    t, 
-    parametros_oscilatorio
-    )
-
-modelo_teste = odeint(
+modelo_facilitacao_0 = odeint(
     modele_facilitacao_amensalismo,
     [x_inicial_1, x_inicial_2, x_inicial_3],
     t,
-    parametros_controle_1
+    parametros_facilitacao_0
+)
+
+modelo_facilitacao_1 = odeint(
+    modele_facilitacao_amensalismo,
+    [x_inicial_1, x_inicial_2, x_inicial_3],
+    t,
+    parametetros_facilitacao_1
 )
 
 #############################Plotagem de integracao ############################
 
-#  estabilizado ----------------------------------------------------------------
+#  facilitacao 0 ---------------------------------------------------------------
 figure(figsize = (8, 6))
 tick_params(labelsize = 15)
-plot(t, modelo_estabilizado, linewidth = 2.5, linestyle = "-")
+plot(t, modelo_facilitacao_0, linewidth = 2.5, linestyle = "-")
 xlabel("t", fontsize = 20) # definir rótulo do eixo x
 ylabel("x", fontsize = 20) # e do eixo y
 legend(
   ["Cactos Recrutados (jovens)", "Cactos Adultos", "Palos Verdes"], 
   fontsize = 16
 )
-savefig("integrado_estavel.png")
-print(modelo_estabilizado)
+savefig("integrado_facilitacao_0.png")
+print(modelo_facilitacao_0)
 
-# Oscilatório -----------------------------------------------------------------
+# facilitacao 1 ---------------------------------------------------------------
 figure(figsize = (8, 6))
 tick_params(labelsize = 15)
-plot(t, modelo_oscilatorio, linewidth = 2.5, linestyle = "-")
+plot(t, modelo_facilitacao_1, linewidth = 2.5, linestyle = "-")
 xlabel("t", fontsize = 20) # definir rótulo do eixo x
 ylabel("x", fontsize = 20) # e do eixo y
 legend(
-  ["Cactos Recrutados (jovens)", "Cactos Adultos", "Palos Verdes"], 
+  ["Cactos Recrutados (jovens)", "Cactos Adultos", "Palos Verdes"],
   fontsize = 16
 )
-savefig("integrado_oscilatorio.png")
-print(modelo_oscilatorio)
+savefig("integrado_facilitacao_1.png")
+print(modelo_facilitacao_1)
 
-# Teste ------------------------------------------------------------------------
-figure(figsize = (8, 6))
-tick_params(labelsize = 15)
-plot(t, modelo_teste, linewidth = 2.5, linestyle = "-")
-xlabel("t", fontsize = 20) # definir rótulo do eixo x
-ylabel("x", fontsize = 20) # e do eixo y
-legend(
-  ["Cactos Recrutados (jovens)", "Cactos Adultos", "Palos Verdes"], 
-  fontsize = 16
-)
-savefig("integrado_teste.png")
-print(modelo_teste)
 
 ######################### Espaço de fase #######################################
 
-# Estabilizado -----------------------------------------------------------------
-
+# facilitacao 0 ---------------------------------------------------------------
 # 3D
-# Plota o espaço de fase tridimensional
 fig = figure(figsize=(10, 8))
 ax = fig.add_subplot(111, projection='3d')
 ax.plot(
-  modelo_estabilizado[:, 0],
-  modelo_estabilizado[:, 1],
-  modelo_estabilizado[:, 2],
+  modelo_facilitacao_0[:, 0],
+  modelo_facilitacao_0[:, 1],
+  modelo_facilitacao_0[:, 2],
   linewidth = 2.5, 
   linestyle = "-"
 )
@@ -159,14 +151,14 @@ ax.set_ylabel("Cactos Adultos", fontsize=20)
 ax.set_zlabel("Palos Verdes", fontsize=20)
 
 # Salvando a figura
-savefig("espaco_de_fase_3d_estabilizado.png")
+savefig("espaco_de_fase_3d_facilitacao_0.png")
 
 # 2D
 figure(figsize=(10, 8))
 plot(
-  modelo_estabilizado[:, 1],
-  modelo_estabilizado[:, 2],
-  linewidth = 2.5, 
+  modelo_facilitacao_0[:, 1],
+  modelo_facilitacao_0[:, 2],
+  linewidth = 2.5,
   linestyle = "-"
 )
 
@@ -176,17 +168,17 @@ ylabel("Palos Verdes", fontsize=20)
 
 
 # Salvando a figura
-savefig("espaco_de_fase_2d_estabilizado.png")
+savefig("espaco_de_fase_2d_facilitacao_0.png")
 
-# Oscilatório ------------------------------------------------------------------
+# facilitacao 1 ---------------------------------------------------------------
 
 # 3D -----------------------------------
 fig = figure(figsize=(10, 8))
 ax = fig.add_subplot(111, projection='3d')
 ax.plot(
-  modelo_oscilatorio[:, 0],
-  modelo_oscilatorio[:, 1],
-  modelo_oscilatorio[:, 2],
+  modelo_facilitacao_1[:, 0],
+  modelo_facilitacao_1[:, 1],
+  modelo_facilitacao_1[:, 2],
   linewidth = 2.5, 
   linestyle = "-"
 )
@@ -197,13 +189,13 @@ ax.set_ylabel("Cactos Adultos", fontsize=20)
 ax.set_zlabel("Palos Verdes", fontsize=20)
 
 # Salvando a figura
-savefig("espaco_de_fase_3d_oscilatorio.png")
+savefig("espaco_de_fase_3d_facilitacao_1.png")
 
 # 2D -----------------------------------
 figure(figsize=(10, 8))
 plot(
-  modelo_oscilatorio[:, 1],
-  modelo_oscilatorio[:, 2],
+  modelo_facilitacao_1[:, 1],
+  modelo_facilitacao_1[:, 2],
   linewidth = 2.5, 
   linestyle = "-"
 )
@@ -213,49 +205,58 @@ xlabel("Cactos Adultos", fontsize=20)
 ylabel("Palos Verdes", fontsize=20)
 
 # Salvando a figura
-savefig("espaco_de_fase_2d_oscilatorio.png")
-
-# Teste ------------------------------------------------------------------------
-
-# 3D -----------------------------------
-fig = figure(figsize=(10, 8))
-ax = fig.add_subplot(111, projection='3d')
-ax.plot(
-  modelo_teste[:, 0],
-  modelo_teste[:, 1],
-  modelo_teste[:, 2],
-  linewidth = 2.5, 
-  linestyle = "-"
-)
-
-# Definindo rótulos dos eixos
-ax.set_xlabel("Cactos Recrutados (jovens)", fontsize=20)
-ax.set_ylabel("Cactos Adultos", fontsize=20)
-ax.set_zlabel("Palos Verdes", fontsize=20)
-
-# Salvando a figura
-savefig("espaco_de_fase_3d_teste.png")
-
-# 2D -----------------------------------
-figure(figsize=(10, 8))
-plot(
-  modelo_teste[:, 1],
-  modelo_teste[:, 2],
-  linewidth = 2.5, 
-  linestyle = "-"
-)
-
-# Definindo rótulos dos eixos
-xlabel("Cactos Adultos", fontsize=20)
-ylabel("Palos Verdes", fontsize=20)
-
-# Salvando a figura
-savefig("espaco_de_fase_2d_teste.png")
+savefig("espaco_de_fase_2d_facilitacao_1.png")
 
 
 ################################ Diagrama de bifurcação ########################
-# figure(figsize=(10, 8))
-# plot(10, modelo_integrado[-5000:, 0].min(), 'ro', markersize=10)
-# plot(10, modelo_integrado[-5000:, 0].max(), 'ro', markersize=10)
-# plot(10, modelo_integrado[-5000:, 1].min(), 'ob', markersize=10)
-# plot(10, modelo_integrado[-5000:, 1].max(), 'ob', markersize=10)
+
+## este bloco calcula soluções para muitos K's, devemos criar listas 
+#  vazia para  que possamos anexar os valores posteriormente
+ymin = []
+ymax = []
+ff = arange(0, 20, .01)
+t = arange(0, 10000, 0.1)
+
+for f in ff:
+
+    parametros =  (
+      taxa_associacao, # taxa_associacao
+      r_cacto_adulto, # r_cacto_adulto
+      f, # taxa de facilitacao
+      taxa_envelhecimento, # taxa de envelhecimento dos cactos (35 anos para envelhecer)
+      k_cacto_adulto, # k do cacto adulto (50 cactos)
+      morte_cacto_adulto, # 0.3 cactos morrem naturalmente por ano
+      r_arbusto, # r do arbusto
+      k_arbusto, # 50 cactos
+      taxa_saciedade, # taxa de saciedade (os cactos matam 0.8 arbustos por ano)
+      taxa_predacao # taxa de predacao (adimensional
+    )
+    #integre novamente a equação, com novos parâmetros
+    y = odeint(modele_facilitacao_amensalismo, [x_inicial_1, x_inicial_2, x_inicial_3], t, parametros)
+    ymin.append(y[-1000:,:].min(axis=0))
+    ymax.append(y[-1000:,:].max(axis=0))
+
+# converte as listas em arrays
+ymin = array(ymin)
+ymax = array(ymax)
+
+
+
+
+figure(figsize=(10, 8))
+plot(ff, ymin[:,1], "g", linewidth = 2.5, linestyle = "-")
+plot(ff, ymin[:,2], "b", linewidth = 2.5, linestyle = "-")
+plot(ff, ymax[:,1], "g", linewidth = 2.5, linestyle = "-")
+plot(ff, ymax[:,2], "b", linewidth = 2.5, linestyle = "-")
+xlabel("facilitacao", fontsize = 20)
+ylabel("população min / max", fontsize = 20)
+legend(loc = "best", fontsize = 16)
+yscale("log")
+legend(
+  ["Cactos Adultos Mínimo", "Palos Verdes Mínimo", "Cactos Adultos Máximo", "Palos Verdes Máximo"], 
+  fontsize = 16
+)
+
+savefig("diagrama_de_bifurcacao.png")
+
+
