@@ -6,7 +6,7 @@ from scipy.integrate import odeint
 taxa_associacao = 2 #c
 r_cacto_adulto = 0.006 #r1
 taxa_facilitacao = 5 #f
-taxa_envelhecimento = 0.03 #alpha (escala de 10^-2)
+taxa_envelhecimento = 0.02 #alpha (escala de 10^-2)
 k_cacto_adulto = 0.009 #k1 )(inversamente proporcional)
 morte_cacto_adulto = 0.02  #d
 r_arbusto = 3 #r2
