@@ -3,7 +3,7 @@ from matplotlib.pyplot import *
 from scipy.integrate import odeint
 
 # parâmetros
-taxa_associacao = 2 #c
+taxa_associacao = 3 #c
 r_cacto_adulto = 0.006 #r1
 taxa_facilitacao = 5 #f
 taxa_envelhecimento = 0.02 #alpha (escala de 10^-2)
@@ -12,7 +12,7 @@ morte_cacto_adulto = 0.02  #d
 r_arbusto = 3 #r2
 k_arbusto = 10 #k2
 taxa_saciedade = 1 #h
-taxa_predacao = 3 #m k
+taxa_predacao = 2 #m k
 
 # condições iniciais
 x_inicial_1 = 0.1
