@@ -61,6 +61,6 @@ tick_params(labelsize = 15)
 plot(t, modelo_integrado, linewidth = 2.5, linestyle = "-")
 xlabel("t", fontsize = 20) # definir rótulo do eixo x
 ylabel("x", fontsize = 20) # e do eixo y
-legend(["Cactos Recrutado", "Cactos Adulto", "Palos"], fontsize = 16)
+legend(["Cactos Recrutados (jovens)", "Cactos Adultos", "Palos Verdes"], fontsize = 16)
 savefig("full_model_3.png")
 print(modelo_integrado)
